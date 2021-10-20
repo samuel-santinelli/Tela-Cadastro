@@ -50,10 +50,37 @@ if (isset($_SESSION['cliente']))
     <meta charset="UTF-8">
     <title> Cadastro </title>
     <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script src="js/jquery.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // Alterando uma propriedade do css ao carregar da página
+            $('#containerModal').css('display', 'none');
+
+            // Abre a Modal
+            $('.pesquisar').click(function(){
+                $('#containerModal').slideToggle(1000);
+            });
+
+            // Fecha a modal
+            $('#fecharModal').click(function(){
+                $('#containerModal').fadeOut();
+            });
+        });
+    </script>
 
 </head>
 
 <body>
+    <!-- Conteudo da modal -->
+    <div id="containerModal">
+
+        <div id="modal">
+        <span id="fecharModal">Fechar</span>
+        </div>
+    </div>
+
+    <!-- Conteudo do cadastro -->
     <div id="cadastro">
         <div id="cadastroTitulo">
             <h1> Cadastro de Contatos </h1>
