@@ -33,3 +33,5 @@ const BD_MSG_EXCLUIR = "<script>
                         window.location.href='../index.php';
                             </script>";
 const BD_MSG_ERRO = "ERRO: Não foi possivel manipular os dados no Banco de Dados";
+
+?>

@@ -22,7 +22,8 @@ function inserir ($arrayCliente)
                     telefone,
                     celular,
                     email,
-                    obs
+                    obs,
+                    idEstado
                 )
                 values
                 (
@@ -32,7 +33,8 @@ function inserir ($arrayCliente)
                     '".$arrayCliente['telefone'] ."',
                     '".$arrayCliente['celular'] ."',
                     '".$arrayCliente['email'] ."',
-                    '".$arrayCliente['obs'] ."'
+                    '".$arrayCliente['obs'] ."',
+                    ".$arrayCliente['idEstado'] ."
                 )
             ";
 

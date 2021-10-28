@@ -31,3 +31,5 @@
                     window.history.back();
                 </script>
         ");
+
+?>

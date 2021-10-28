@@ -23,6 +23,7 @@ $telefone = (string) null;
 $celular = (string) null;
 $email = (string) null;
 $obs = (string) null;
+$idEstado = (int) null;
 
 // Validação para saber se o id do registro está chegando pela url(modo para atualizar um registro)
 if (isset($_GET['id']))
@@ -41,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $celular = $_POST['txtCelular'];
     $email = $_POST['txtEmail'];
     $obs = $_POST['txtObs'];
+    $idEstado = $_POST['sltEstado'];
 
     //Validação de campos obrigatórios
     if ($nome == null || $rg == null || $cpf == null)
@@ -67,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             "celular"  => $celular,
             "email"    => $email,
             "obs"      => $obs,
-            "id"       => $id 
-
+            "id"       => $id, 
+            "idEstado" => $idEstado
         );
 
         // Validação para saber se é para inserir um novo registro ou se é para atualiar um registro existente no Banco de Dados
@@ -109,3 +111,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 //window.history.back(); - retorna para pagina anterior 
+
+?>

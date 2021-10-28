@@ -24,3 +24,5 @@ function excluir($idCliente)
                 else
                     return false;
 }
+
+?>

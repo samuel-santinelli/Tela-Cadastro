@@ -28,7 +28,11 @@ function listar()
 // Retorna apenas um registro, com base no id
 function buscar($idCliente)
 {
-   $sql = "select * from tblcliente where idcliente = ".$idCliente;
+   $sql = "select tblcliente.*, tblEstado.sigla 
+            from tblcliente
+	            inner join tblEstado
+		         on tblEstado.idEstado = tblCliente.idEstado
+                  where tblcliente.idcliente = ".$idCliente;
 
    //Abre a conexão com o Banco de Dados
    $conexao = conexaoMysql();
@@ -38,3 +42,5 @@ function buscar($idCliente)
 
    return $select;   
 }
+
+?>

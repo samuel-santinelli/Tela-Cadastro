@@ -44,3 +44,5 @@ if ($rsCliente = mysqli_fetch_assoc($dadosCliente)) {
              </script>
         ");
 }
+
+?>

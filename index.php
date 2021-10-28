@@ -11,6 +11,9 @@ $cpf = (string) null;
 $email = (string) null;
 $observacao = (string) null;
 $id = (int) 0;
+// Variaveis para trazer os valores do Estado para a edição
+$idEstado = (int) null;
+$sigla = (string) "Selecione um item";
 
 // Essa variavel será utilizada para definir o modo de manipulação com o Banco de dados(Salvar será feito o insert
 // Atualizar será feito um update)
@@ -25,6 +28,9 @@ require_once('functions/config.php');
 
 require_once(SRC . 'controles/exibeDadosClientes.php');
 
+// Import do arquivo que lista todos os estados do Banco de Dados
+require_once(SRC . 'controles/listarDadosEstados.php');
+
 // Verifica a existencia da variavel sessão que usamos para trazer os dados para o editar
 if (isset($_SESSION['cliente'])) 
 {
@@ -36,6 +42,9 @@ if (isset($_SESSION['cliente']))
     $rg = $_SESSION['cliente']['rg'];
     $cpf = $_SESSION['cliente']['cpf'];
     $obs = $_SESSION['cliente']['obs'];
+    $idEstado = $_SESSION['cliente']['idEstado'];
+    $sigla = $_SESSION['cliente']['sigla'];
+    
     $modo = "Atualizar";
 
     // Elimina um objeto, variavel da memória
@@ -60,6 +69,19 @@ if (isset($_SESSION['cliente']))
             // Abre a Modal
             $('.pesquisar').click(function(){
                 $('#containerModal').slideToggle(1000);
+            
+                // Recebe o id do Cliente que foi adicionado pelo data atributo no HTML 
+                let idCliente = $(this).data('id');
+                // Realiza uma requisição para consumir dados de uma outra pagina
+                $.ajax({
+                    type: "GET", //Tipo de requisição (GET, POST, PUT, etc)
+                    url: "visualizarDados.php", //URL da pagina que será consumida
+                    data: {id:idCliente}, 
+                    success: function(dados){ //Se a requisição der     certo, iremos receber o conteudo na variavel dados
+                        
+                        $('#modal').html(dados); //Exibe dentro da div modal
+                    }
+                });
             });
 
             // Fecha a modal
@@ -76,8 +98,9 @@ if (isset($_SESSION['cliente']))
     <div id="containerModal">
 
         <div id="modal">
-        <span id="fecharModal">Fechar</span>
+       
         </div>
+        <span id="fecharModal"><img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir"></span>
     </div>
 
     <!-- Conteudo do cadastro -->
@@ -135,6 +158,29 @@ if (isset($_SESSION['cliente']))
                     </div>
                 </div>
 
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <label> Estado: </label>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <select name="sltEstado" id="">
+                            <option selected value="<?=$idEstado?>"><?=$sigla?></option>
+                            <?php 
+                                // Chama a função que vai buscar todos os estados do Banco de Dados
+                                $listEstados = exibirEstados();
+
+                                    // Repetição para exibir os dados do Banco de Dados
+                                    while($rsEstados = mysqli_fetch_assoc($listEstados))
+                                    {
+                                        ?>
+                                            <option value="<?=$rsEstados['idEstado']?>"><?=$rsEstados['sigla']?></option>
+                                        <?php
+                                    }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
                         <label> Telefone: </label>
@@ -212,7 +258,7 @@ if (isset($_SESSION['cliente']))
                             <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
                         </a>
 
-                        <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar">
+                        <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar" data-id="<?=$rsClientes['idcliente']?>">
                     </td>
                 </tr>
             <?php

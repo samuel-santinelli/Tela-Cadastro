@@ -20,7 +20,8 @@ function editar($arrayCliente)
             telefone = '".$arrayCliente['telefone']."',
             celular = '".$arrayCliente['celular']."',
             email = '".$arrayCliente['email']."',
-            obs = '".$arrayCliente['obs']."'            
+            obs = '".$arrayCliente['obs']."',
+            idEstado = ".$arrayCliente['idEstado']."           
         where idcliente = ".$arrayCliente['id'];
 
           //Chamando a função que estabelece a conexão com Banco de dados
