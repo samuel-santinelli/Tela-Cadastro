@@ -34,4 +34,9 @@ const BD_MSG_EXCLUIR = "<script>
                             </script>";
 const BD_MSG_ERRO = "ERRO: Não foi possivel manipular os dados no Banco de Dados";
 
+// Constantes para upload de Arquivos
+define ('NOME_DIRETORIO_FILE',  'arquivos/');
+$extensoesPermitidasFile = array ("image/png", "image/jpg", "image/jpeg");
+define('EXTENSOES_PERMITIDAS', $extensoesPermitidasFile);
+const TAMANHO_FILE = "5120";
 ?>

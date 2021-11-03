@@ -16,6 +16,9 @@ require_once('../functions/config.php');
 require_once(SRC . '/bd/inserirCliente.php');
 require_once(SRC . '/bd/atualizarCliente.php');
 
+// Import do arquivo que faz upload de imagens para o servidor
+require_once(SRC . '/functions/upload.php');
+
 //Declaração de variaveis 
 $nome = (string) null;
 $cpf = (string) null;
@@ -24,6 +27,9 @@ $celular = (string) null;
 $email = (string) null;
 $obs = (string) null;
 $idEstado = (int) null;
+
+//Variavel criada para guardar o nome da foto  
+$foto = (string) null;
 
 // Validação para saber se o id do registro está chegando pela url(modo para atualizar um registro)
 if (isset($_GET['id']))
@@ -43,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['txtEmail'];
     $obs = $_POST['txtObs'];
     $idEstado = $_POST['sltEstado'];
+
+    // Chama a função que faz o upload de um arquivo 
+    uploadFile($_FILES['fleFoto']);
+    die;
 
     //Validação de campos obrigatórios
     if ($nome == null || $rg == null || $cpf == null)

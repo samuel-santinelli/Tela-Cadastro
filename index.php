@@ -129,7 +129,9 @@ if (isset($_SESSION['cliente']))
             modo - responsavel por definir se é para inserir ou atualizar
         
             id - que é responsavel por identificar o registro a ser atualizado no Banco de Dados-->
-            <form action="controles/recebeDadosClientes.php?modo=<?=$modo?>&id=<?=$id?>" name="frmCadastro" method="post">
+            <!-- enctype="multipart/form-data" é obrigatório ser utilizado quando for trabalhar com imagens
+            Obs: (Para trabalhar com a input type="file) É obrigatório utilizar o método POST  -->
+            <form  enctype="multipart/form-data" action="controles/recebeDadosClientes.php?modo=<?=$modo?>&id=<?=$id?>" name="frmCadastro" method="post">
 
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
@@ -137,6 +139,15 @@ if (isset($_SESSION['cliente']))
                     </div>
                     <div class="cadastroEntradaDeDados">
                         <input type="text" name="txtNome" value="<?= $nome ?>" placeholder="Digite seu Nome" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <label> Foto </label>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="file" name="fleFoto" accept="image/jpeg, image/jpg, image/png">                        
                     </div>
                 </div>
 
