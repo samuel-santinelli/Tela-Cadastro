@@ -49,10 +49,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['txtEmail'];
     $obs = $_POST['txtObs'];
     $idEstado = $_POST['sltEstado'];
+    
+    // Esse nome está chegando através do action do form da index, o motivo dessa variavel é para concluir o editar com o upload de foto
+    $nomeFoto = $_GET['nomeFoto'];
 
-    // Chama a função que faz o upload de um arquivo 
-    uploadFile($_FILES['fleFoto']);
-    die;
+        if (strtoupper($_GET['modo']) == 'ATUALIZAR')
+        {
+            if($_FILES['fleFoto']['name'] != "")
+            {
+                //Chama a função que faz o upload de um arquivo 
+                $foto = uploadFile($_FILES['fleFoto']);
+            }   
+        }
 
     //Validação de campos obrigatórios
     if ($nome == null || $rg == null || $cpf == null)
@@ -80,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             "email"    => $email,
             "obs"      => $obs,
             "id"       => $id, 
-            "idEstado" => $idEstado
+            "idEstado" => $idEstado,
+            "foto"     => $foto
         );
 
         // Validação para saber se é para inserir um novo registro ou se é para atualiar um registro existente no Banco de Dados

@@ -19,12 +19,18 @@
     /*O id está sendo encaminhado pela index, no link que foi realizado
     na imagem do excluir*/
     $idCliente = $_GET['id'];
+    // O nome da foto foi enviado pela index no link do excluir 
+    $nomeFoto = $_GET['foto'];
 
     /*Chama a função excluir e encaminha o id que será removido do 
     Banco de Dados*/
     if(excluir($idCliente))
+    {
+        // Apaga a foto que está na pasta dos arquivos do upload 
+        unlink(SRC.NOME_DIRETORIO_FILE.$nomeFoto);
         echo(BD_MSG_EXCLUIR);
-    else
+    }
+        else
         echo("
                 <script> 
                     alert('". BD_MSG_ERRO ."');

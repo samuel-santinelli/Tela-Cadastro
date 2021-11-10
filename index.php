@@ -10,6 +10,7 @@ $rg = (string) null;
 $cpf = (string) null;
 $email = (string) null;
 $observacao = (string) null;
+$foto = (string) null;
 $id = (int) 0;
 // Variaveis para trazer os valores do Estado para a edição
 $idEstado = (int) null;
@@ -44,7 +45,8 @@ if (isset($_SESSION['cliente']))
     $obs = $_SESSION['cliente']['obs'];
     $idEstado = $_SESSION['cliente']['idEstado'];
     $sigla = $_SESSION['cliente']['sigla'];
-    
+    $foto = $_SESSION['cliente']['foto'];
+
     $modo = "Atualizar";
 
     // Elimina um objeto, variavel da memória
@@ -131,7 +133,7 @@ if (isset($_SESSION['cliente']))
             id - que é responsavel por identificar o registro a ser atualizado no Banco de Dados-->
             <!-- enctype="multipart/form-data" é obrigatório ser utilizado quando for trabalhar com imagens
             Obs: (Para trabalhar com a input type="file) É obrigatório utilizar o método POST  -->
-            <form  enctype="multipart/form-data" action="controles/recebeDadosClientes.php?modo=<?=$modo?>&id=<?=$id?>" name="frmCadastro" method="post">
+            <form  enctype="multipart/form-data" action="controles/recebeDadosClientes.php?modo=<?=$modo?>&id=<?=$id?>&nomeFoto=<?=$foto?>" name="frmCadastro" method="post">
 
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
@@ -147,8 +149,13 @@ if (isset($_SESSION['cliente']))
                         <label> Foto </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="file" name="fleFoto" accept="image/jpeg, image/jpg, image/png">                        
+                        <input type="file" name="fleFoto" accept="image/jpeg, image/jpg, image/png">       
+                        
                     </div>
+                    <div id="visualizarFoto">
+                            <img src="<?=NOME_DIRETORIO_FILE.$foto?>">
+                            </div>                 
+                   
                 </div>
 
                 <div class="campos">
@@ -240,12 +247,13 @@ if (isset($_SESSION['cliente']))
     <div id="consultaDeDados">
         <table id="tblConsulta">
             <tr>
-                <td id="tblTitulo" colspan="5">
+                <td id="tblTitulo" colspan="6">
                     <h1> Consulta de Dados.</h1>
                 </td>
             </tr>
             <tr id="tblLinhas">
                 <td class="tblColunas destaque"> Nome </td>
+                <td class="tblColunas destaque"> Foto </td>
                 <td class="tblColunas destaque"> Celular </td>
                 <td class="tblColunas destaque"> Email </td>
                 <td class="tblColunas destaque"> Opções </td>
@@ -260,12 +268,15 @@ if (isset($_SESSION['cliente']))
                     <td class="tblColunas registros"><?= $rsClientes['celular'] ?></td>
                     <td class="tblColunas registros"><?= $rsClientes['email'] ?></td>
                     <td class="tblColunas registros">
+                        <img class="picture" src="<?=NOME_DIRETORIO_FILE.$rsClientes['foto']?>" alt="">
+                    </td>
+                    <td class="tblColunas registros">
                         <a href="controles/editaDadosClientes.php?id=<?= $rsClientes['idcliente'] ?>">
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
                         </a>
 
 
-                        <a onclick="return confirm('Tem certeza que deseja excluir?');" href="controles/excluiDadosClientes.php?id=<?= $rsClientes['idcliente'] ?>">
+                        <a onclick="return confirm('Tem certeza que deseja excluir?');" href="controles/excluiDadosClientes.php?id=<?=$rsClientes['idcliente']?>&foto=<?=$rsClientes['foto']?>">
                             <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
                         </a>
 

@@ -18,7 +18,8 @@ function uploadFile($arrayFile)
     $tipoArquivo = (string) null;
     $nomeArquivo = (string) null;
     $nomeArquivoCript = (string) null;
-    
+    $arquivoTemp = (string) null;
+    $foto = (string) null;    
 
     // die; //Serve para parar a execuçãodo código do apache
     
@@ -53,9 +54,22 @@ function uploadFile($arrayFile)
 
                 */
 
+                //uniqid() //Gera uma sequencia numerica com base nas configurações em hardware da maquina
+                //time() pega a hora:minuto:segundo atual
+                
                 $nomeArquivoCript = md5($nomeArquivo.uniqid(time()));
-                    echo($nomeArquivoCript);
-                        die;
+
+                // Monta o novo nome do arquivo com a extensão
+                $foto = $nomeArquivoCript.".".$extensao;
+
+                // Recebe o nome do arquivo temporario que foi gerado quando o apache recebeu o arquivo do form
+                $arquivoTemp = $fotoFile['tmp_name'];
+
+                // move_uploaded_file - Move o arquivo da pasta temporaria do apache para a pasta do servidor que foi criada
+                if(move_uploaded_file($arquivoTemp, SRC.NOME_DIRETORIO_FILE.$foto))
+                    return $foto;
+                else
+                    echo('ERRO, Não foi possivel fazer o upload do arquivo');
 
             }else
                 echo('Ocorreu um erro devido ao tipo do arquivo');
