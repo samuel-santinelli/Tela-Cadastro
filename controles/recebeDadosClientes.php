@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['txtEmail'];
     $obs = $_POST['txtObs'];
     $idEstado = $_POST['sltEstado'];
-    
+
     // Esse nome está chegando através do action do form da index, o motivo dessa variavel é para concluir o editar com o upload de foto
     $nomeFoto = $_GET['nomeFoto'];
 
@@ -59,7 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             {
                 //Chama a função que faz o upload de um arquivo 
                 $foto = uploadFile($_FILES['fleFoto']);
-            }   
+                // Apaga a imagem antiga 
+                unlink(SRC.NOME_DIRETORIO_FILE.$nomeFoto);
+            }else
+            {
+                $foto = $nomeFoto;
+            }
+        }else //Caso a variavel modo sejá 'SALVAR', então será obrigatório o upload da foto 
+        {
+                // Chama a função que faz o puload de um arquivo 
+                $foto = uploadFile($_FILES['fleFoto']);
+            }
         }
 
     //Validação de campos obrigatórios
@@ -128,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         }
     }
-}
+
 //window.history.back(); - retorna para pagina anterior 
 
 ?>

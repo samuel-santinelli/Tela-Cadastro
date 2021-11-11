@@ -8,6 +8,9 @@ __________________________________
 |_________________________________|
 
 */
+
+// Varchar sempre será com aspas simples '".."'
+
 //Import do arquivo de conexão com o Banco de Dados
 require_once('../bd/conexaoMysql.php');
 
@@ -21,7 +24,8 @@ function editar($arrayCliente)
             celular = '".$arrayCliente['celular']."',
             email = '".$arrayCliente['email']."',
             obs = '".$arrayCliente['obs']."',
-            idEstado = ".$arrayCliente['idEstado']."           
+            idEstado = ".$arrayCliente['idEstado'].",
+            foto = '".$arrayCliente['foto']."'  
         where idcliente = ".$arrayCliente['id'];
 
           //Chamando a função que estabelece a conexão com Banco de dados
