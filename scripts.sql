@@ -32,7 +32,7 @@ show tables;
 /*Permite visualizar o conteudo de uma tabela*/
 select * from tblcliente;
 
-insert into tblcliente ( nome, rg, cpf, telefone, celular, email, obs ) values ( 'Samuel', 'ddadadaddddsd', 'dadadadadadadadadada', 'dadadadadda', 'addadadad', 'dadaddaddadad@ss', '' );
+insert into tblcliente (nome, rg, cpf, telefone, celular, email, obs ) values ( 'Samuel', 'ddadadaddddsd', 'dadadadadadadadadada', 'dadadadadda', 'addadadad', 'dadaddaddadad@ss', '' );
 
 alter table tblcliente
 	add column foto varchar(40);

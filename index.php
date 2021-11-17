@@ -10,7 +10,7 @@ $rg = (string) null;
 $cpf = (string) null;
 $email = (string) null;
 $observacao = (string) null;
-$foto = (string) null;
+$foto = (string) "sem-foto.png";
 $id = (int) 0;
 // Variaveis para trazer os valores do Estado para a edição
 $idEstado = (int) null;
