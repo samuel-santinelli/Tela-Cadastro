@@ -12,6 +12,7 @@ _____________________________________________
 //Import do arquivo de conexão com o Banco de Dados
 require_once(SRC.'/bd/listarClientes.php');
 
+// Função para listar dados do banco de dados
 function exibirClientes()
     {
         /*Chama a função que busca os 
@@ -20,6 +21,18 @@ function exibirClientes()
 
         return $dados;
     }
+
+
+    // Função para buscar dados do banco de dados
+    function buscarClientes($id)
+    {
+        /*Chama a função que busca os 
+        dados no Banco de Dados e recebe os registros dos clientes*/
+        $dados = buscar($id);
+
+        return $dados;
+    }
+
 
 // Função para criar um array de dados com basee no retorno do Banco de Dados
 function criarArray($objeto)
