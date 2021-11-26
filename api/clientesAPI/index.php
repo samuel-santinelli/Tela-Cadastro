@@ -112,21 +112,87 @@
     });
 
     // Endpoint: PUT, atualiza um cliente no Banco de Dados
-    $app->put('/clientes', function($request, $response, $args){
+    $app->put('/clientes/{id}', function($request, $response, $args){
 
-        return $response   ->withStatus(201)  
-                           ->withHeader('Content-Type', 'application/json')
-                           ->write('{"message":"item atualizado com sucesso"}');
+           // Recebe o Content Type do header, para verificar se o padrão do body será JSON
+           $contentType = $request->getHeaderLine('Content-Type'); 
+
+           // Valida se o tipo de dados é JSON 
+           if($contentType == 'application/json')
+           {
+   
+               // Recebe o conteudo enviado no body da mensagem
+               $dadosBodyJSON = $request->getParsedBody();
+   
+            
+               // Valida se o corpo do body está vazio
+               if($dadosBodyJSON == "" || $dadosBodyJSON == null || !isset($args['id']) || !is_numeric($args['id']) )
+               {
+                   return $response   ->withStatus(406)  
+                                      ->withHeader('Content-Type', 'application/json')
+                                      ->write('{"message":"Conteúdo enviado pelo body não contem dados validos"}');
+               }else
+               {
+                    // Recebe o id que será enviado pela URL
+                    $id = $args['id'];
+
+                   // Import no arquivo que vai encaminhar os dados no Banco
+                   require_once('../controles/recebeDadosClientesAPI.php');
+                   
+   
+                   // Envia os dados para o Banco de dados e valida se foi inserido com sucesso
+                   if (atualizarClienteAPI($dadosBodyJSON, $id))
+                   {
+                       return $response   ->withStatus(200)  
+                                          ->withHeader('Content-Type', 'application/json')
+                                          ->write('{"message":"Item atualizado com sucesso"}');
+                    }else
+   
+                           {
+                               return $response    ->withStatus(400)  
+                                                   ->withHeader('Content-Type', 'application/json')
+                                                   ->write('{"message":"Não foi possivel salvar os dados, favor conferir o body da mensagem"}');
+                           }
+               }
+           }else
+           { 
+   
+               return $response   ->withStatus(406)  
+                                  ->withHeader('Content-Type', 'application/json')
+                                  ->write('{"message":"O formato de Dados do header é incompatível com o JSON"}');
+           }
+   
                         
     });
 
     // Endpoint: DELETE, Exclui um cliente do Banco de Dados
-    $app->delete('/clientes', function($request, $response, $args){
+    $app->delete('/clientes/{id}', function($request, $response, $args){
+            // Valida se o corpo do body está vazio
+            if(!isset($args['id']) || !is_numeric($args['id']) )
+            {
+                return $response   ->withStatus(406)  
+                                   ->withHeader('Content-Type', 'application/json')
+                                   ->write('{"message":"Opa! Não foi possivel encaminhar um ID válido do registro"}');
+            }else
+            {        
+                $id = $args['id'];
+                require_once('../controles/excluirDadosClientesAPI.php');
 
-        return $response   ->withStatus(200)  
-                           ->withHeader('Content-Type', 'application/json')
-                           ->write('{"message":"Item excluido com sucesso"}');
-                        
+            if (excluirClienteAPI($id))
+            {
+                return $response   ->withStatus(200)  
+                                   ->withHeader('Content-Type', 'application/json')
+                                   ->write('{"message":"Item excluido com sucesso"}');
+             }else
+                        {
+                            return $response    ->withStatus(400)  
+                                                ->withHeader('Content-Type', 'application/json')
+                                                ->write('{"message":"Não foi possivel salvar os dados, favor conferir o body da mensagem"}');
+                
+                        }
+                    }
+            
+
     });
 
     // Carrega todos os EndPoint para a execução
